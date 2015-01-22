@@ -1,18 +1,25 @@
 Getting and Cleaning Data Course Project
-Otto Perdeck
+author: Otto Perdeck
 
 Files in the repository:
 
-- README.md : this file, explaining how all of the scripts work and how they are connected
-- CodeBook.md : a code book that describes the variables, the data, and any transformations to clean up the data
+- README.md      : This file, explaining how all of the scripts work and how they are connected
+- CodeBook.md    : A code book that describes the variables, the data, and any 
+                   transformations to clean up the data
+- get_data.R     : An R script to download the dataset into the working directory. This needs
+                   to be run once.
+- run_analysis.R : An R script that does all the data analysis and eventually generates summary
+                   data in a file 'summary.txt' in the working directory. Before running this, make
+                   sure the dataset has been downloaded into the working directory. Als make sure
+                   that the 'data.table' and 'plyr' packages are available to R. If not, install
+                   them with install.packages first.
 
-- getdata-projectfiles-UCI HAR Dataset.zip
-This is the original dataset, downloaded from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
-dataset homepage is http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+To do the analysis:
 
-[TODO perhaps create an R script to download and unzip it]
-
-- UCI HAR Dataset : the unzipped dataset
-[TODO created by running the download and extraction script]
-
-run_analysis.R : R script that runs the analysis and creates a dataset ...
+(1) Make sure that the 'data.table' and 'plyr' packages are available to R. If not, install
+    them with install.packages first. Also make sure you have an internet connection, otherwise
+    the download in the next step will fail.
+(2) Run 'get_data.R'. 
+    When finished, there should be a file 'UCI HAR Dataset.zip' in the working directory.
+(3) Run 'run_analysis.R'.
+    When finished, there should be a file 'summary.txt' in the working directory

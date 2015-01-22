@@ -1,22 +1,19 @@
-This file will become the cookbook for the assignment in MD
+Getting and Cleaning Data Course Project
+author: Otto Perdeck
 
-[TODO make this an MD file]
-[TODO stuff this folder in github] https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
-[TODO have a README.md about the scripts]
+The steps performed by the R script to get from the zip with the raw dataset
+to the cleaned up and summarize dataset are as follows:
 
-source data UCI HAR Dataset.zip downloaded from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
-dataset homepage is http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+(1) Unzip the dataset 
+    Note: no postprocessing of the dataset has been done, as there seemed to be no
+    missing values or strange outliers
+(2) Merge the training and the test sets to create one data set
+(3) Remove all measurements except for the ones for 'std()' and 'mean()'
+    using the 'features.txt' file from the dataset
+(4) Set descriptive names using the 'features.txt' file from the dataset
+(5) Merge the subject data from training and test set and add to the dataset
+(6) Merge the activity codes, map it to activity names, and add to the dataset
+(7) Summarize the data by only taking the average per subject and activity 
+(8) Write out the resulting data to file
 
-f name getdata-projectfiles-UCI HAR Dataset.zip
-
-unzipped outside of R into folder 'UCI HAR Dataset' [TODO get and unzip the file with R supposedly]
-
-run_analysis.R:
-Merges the training and the test sets to create one data set.
-Extracts only the measurements on the mean and standard deviation for each measurement. 
-Uses descriptive activity names to name the activities in the data set
-Appropriately labels the data set with descriptive variable names. 
-From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-
-
-
+Dataset homepage is http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones

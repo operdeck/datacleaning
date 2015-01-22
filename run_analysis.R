@@ -1,48 +1,40 @@
-setwd('D:/cygwin64/home/perdo/datacleaning')
-setwd('UCI HAR Dataset')
 library(data.table)
 # if this is the first time, install.packages('data.table')
+library(plyr)
 
-#Merges the training and the test sets to create one data set.
+# Assume the data file exists in the working directory. Expand it.
+unzip("./UCI HAR Dataset.zip")
 
-train = read.table('train/X_train.txt')
-test = read.table('test/X_test.txt')
+# Merge the training and the test sets to create one data set.
+train <- read.table('./UCI HAR Dataset/train/X_train.txt')
+test <- read.table('./UCI HAR Dataset/test/X_test.txt')
 combined <- rbind(train, test)
-# check with dim() that they are combined
 
-# 2: Extract only the measurements on the mean and standard deviation for each measurement.
+# We only need the measurements for 'mean' and 'std'. Using the feature descriptions,
+# we get the indices of the columns for those measurements, then use this vector
+# of indices to subset the dataset.
 #
-# Instead of hardcoding the indices of these, we read the features txt file and
-# obtain the relevant columns by filtering the feature names on '-mean()' and '-std()'.
-features = read.table('features.txt')
-indices = grep('-mean\\(\\)|-std\\(\\)',features$V2)
-#print(features[indices,2])
-combined_sliced <- combined[,indices]
+# We also turn it into a data table for more efficient processing.
+features <- read.table('./UCI HAR Dataset/features.txt')
+indices <- grep('-mean\\(\\)|-std\\(\\)',features$V2) # using grep to get cols with '-mean()' and '-std()'
+dataset <- as.data.table(combined[,indices])
 
-# 4: Appropriately labels the data set with descriptive variable names. 
-#
-# The names are in the 'features' vector and we apply these to the columns
-colnames(combined_sliced) <- features[indices,2]
+# Label the data set with descriptive variable names from the features descriptions. 
+setnames(dataset, as.character(features[indices,2]))
 
-# TODO: merge in the subjects
-# from 'train/subject_train.txt'
+# Merge in the subjects.
+subjects <- rbind(read.table('./UCI HAR Dataset/train/subject_train.txt'), 
+                  read.table('./UCI HAR Dataset/test/subject_test.txt'))
+dataset[, subject := subjects]
 
-# 3: Use descriptive activity names to name the activities in the data set
-# First, create a vector with the activities by name, then add that vector
-# to the earlier obtained data table.
-activities_train = read.table('train/y_train.txt')
-activities_test = read.table('test/y_test.txt')
-activities_combined <- rbind(activities_train, activities_test)
-activities_labels = read.table('activity_labels.txt')
-activities_byname <- activities_labels$V2[activities_combined$V1]
-q <- combined_sliced[, Activity := activities_byname]
+# Merge in the activities. Translate the activity codes to labels.
+activities <- rbind(read.table('./UCI HAR Dataset/train/y_train.txt'), 
+                    read.table('./UCI HAR Dataset/test/y_test.txt'))
+activity_labels <- read.table('./UCI HAR Dataset/activity_labels.txt')
+activities_byname <- activity_labels$V2[activities$V1]
+dataset[, activity := activities_byname]
 
-# should work...
-# make a data table first! b <- as.data.table(combined_sliced) - or perhaps earlier already
-# a la DT[, b:=mean(x+w),by=a]
+# Create a dataset with only the mean of each variable for each activity and each subject.
+summary <- ddply(dataset, .(subject, activity), numcolwise(mean))
+write.table(summary, file="./summary.txt", col.names=FALSE)
 
-#Extracts only the measurements on the mean and standard deviation for each measurement. 
-#Uses descriptive activity names to name the activities in the data set
-#Appropriately labels the data set with descriptive variable names. 
-#From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-#txt file created with write.table() using row.name=FALSE
