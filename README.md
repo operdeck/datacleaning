@@ -1,5 +1,8 @@
-Getting and Cleaning Data Course Project
+#Getting and Cleaning Data Course Project
+
 author: Otto Perdeck
+
+---
 
 Files in the repository:
 
@@ -16,10 +19,10 @@ Files in the repository:
 
 To do the analysis:
 
-(1) Make sure that the 'data.table' and 'plyr' packages are available to R. If not, install
-    them with install.packages first. Also make sure you have an internet connection, otherwise
-    the download in the next step will fail.
-(2) Run 'get_data.R'. 
-    When finished, there should be a file 'UCI HAR Dataset.zip' in the working directory.
-(3) Run 'run_analysis.R'.
-    When finished, there should be a file 'summary.txt' in the working directory
+1. Make sure that the 'data.table' and 'plyr' packages are available to R. If not, install
+   them with install.packages first. Also make sure you have an internet connection, otherwise
+   the download in the next step will fail.
+2. Run 'get_data.R'. 
+   When finished, there should be a file 'UCI HAR Dataset.zip' in the working directory.
+3. Run 'run_analysis.R'.
+   When finished, there should be a file 'summary.txt' in the working directory

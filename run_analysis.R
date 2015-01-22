@@ -38,3 +38,6 @@ dataset[, activity := activities_byname]
 summary <- ddply(dataset, .(subject, activity), numcolwise(mean))
 write.table(summary, file="./summary.txt", col.names=FALSE)
 
+print("The resulting summary datafile is in the working directory which is:")
+print(getwd())
+
