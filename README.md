@@ -31,4 +31,7 @@ To do the analysis:
    file should be downloaded in both cases. 
 
 3. Run 'run_analysis.R'.
-   When finished, there should be a file 'summary.txt' in the working directory
+   When finished, there should be a file 'summary.txt' in the working directory. 
+   NOTE: The generated file does not contain headers as we're passing col.names = FALSE to 
+   write.table. To change that, simply change that to col.names = TRUE (I had mis-read the
+   assignment to state it should be generated that way, but they were refering to row.names).
